@@ -65,7 +65,7 @@ test("the CLI emits a shareable report and never replaces evidence implicitly", 
 
     const version = spawnSync(process.execPath, [cli, "--version"], { encoding: "utf8" });
     assert.equal(version.status, 0, version.stderr);
-    assert.equal(version.stdout.trim(), "0.1.0");
+    assert.equal(version.stdout.trim(), "0.1.1");
 
     const secondJson = join(root, "second.dshpack.json");
     const occupiedMarkdown = join(root, "occupied.md");

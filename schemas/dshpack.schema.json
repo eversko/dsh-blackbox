@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/eversko/dsh-blackbox/main/schemas/dshpack.schema.json",
+  "title": "Eversko DSH Black Box incident pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "generatedAt", "privacy", "source", "report"],
+  "properties": {
+    "schema": { "const": "eversko.dsh-blackbox.pack.v1" },
+    "generatedAt": { "type": "integer", "minimum": 0 },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "contentIncluded", "pathsIncluded", "rawSessionIdentifiersIncluded"],
+      "properties": {
+        "mode": { "const": "metadata-only" },
+        "contentIncluded": { "const": false },
+        "pathsIncluded": { "const": false },
+        "rawSessionIdentifiersIncluded": { "const": false }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "runtimeVersion",
+        "sessionFormatVersion",
+        "sessionIdHash",
+        "workspaceHash",
+        "agentPreset",
+        "artifactEncoding",
+        "artifactSha256",
+        "artifactBytes"
+      ],
+      "properties": {
+        "kind": { "type": "string", "minLength": 1 },
+        "runtimeVersion": { "type": ["string", "null"] },
+        "sessionFormatVersion": { "type": ["integer", "null"] },
+        "sessionIdHash": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "workspaceHash": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "agentPreset": { "type": ["string", "null"] },
+        "artifactEncoding": { "type": ["string", "null"] },
+        "artifactSha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "artifactBytes": { "type": ["integer", "null"], "minimum": 0 }
+      }
+    },
+    "report": { "$ref": "#/$defs/report" }
+  },
+  "$defs": {
+    "report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "status", "summary", "anomalies", "timeline"],
+      "properties": {
+        "schema": { "const": "eversko.dsh-blackbox.report.v1" },
+        "status": { "enum": ["healthy", "attention", "critical"] },
+        "summary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "eventCount",
+            "turnCount",
+            "stepCount",
+            "toolCallCount",
+            "approvalCount",
+            "outputChunks",
+            "outputChars",
+            "inputTokens",
+            "outputTokens",
+            "cacheReadTokens",
+            "cacheWriteTokens",
+            "reasoningTokens",
+            "durationMs",
+            "agentPreset"
+          ],
+          "properties": {
+            "eventCount": { "type": "integer", "minimum": 0 },
+            "turnCount": { "type": "integer", "minimum": 0 },
+            "stepCount": { "type": "integer", "minimum": 0 },
+            "toolCallCount": { "type": "integer", "minimum": 0 },
+            "approvalCount": { "type": "integer", "minimum": 0 },
+            "outputChunks": { "type": "integer", "minimum": 0 },
+            "outputChars": { "type": "integer", "minimum": 0 },
+            "inputTokens": { "type": "integer", "minimum": 0 },
+            "outputTokens": { "type": "integer", "minimum": 0 },
+            "cacheReadTokens": { "type": "integer", "minimum": 0 },
+            "cacheWriteTokens": { "type": "integer", "minimum": 0 },
+            "reasoningTokens": { "type": "integer", "minimum": 0 },
+            "durationMs": { "type": "integer", "minimum": 0 },
+            "agentPreset": { "type": ["string", "null"] }
+          }
+        },
+        "anomalies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["code", "severity", "eventSeq", "facts"],
+            "properties": {
+              "code": { "type": "string", "minLength": 1 },
+              "severity": { "enum": ["attention", "critical"] },
+              "eventSeq": { "type": ["integer", "null"] },
+              "facts": {
+                "type": "object",
+                "additionalProperties": { "type": ["string", "number", "boolean", "null"] }
+              }
+            }
+          }
+        },
+        "timeline": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["seq", "time", "kind", "label", "status"],
+            "properties": {
+              "seq": { "type": "integer", "minimum": 0 },
+              "time": { "type": "integer", "minimum": 0 },
+              "kind": { "enum": ["turn", "output", "tool", "approval"] },
+              "label": { "type": "string" },
+              "status": { "enum": ["neutral", "success", "attention"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

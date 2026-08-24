@@ -27,7 +27,9 @@ test("the published tarball installs, exports, resolves types/schema, and runs i
       packageRoot,
     );
     assert.equal(packed.status, 0, packed.stderr);
-    const packResult = JSON.parse(packed.stdout)[0];
+    const packJson = JSON.parse(packed.stdout);
+    const packResult = Array.isArray(packJson) ? packJson[0] : packJson["@eversko/dsh-blackbox"];
+    assert.ok(packResult, "npm pack --json did not return package metadata");
     const included = new Set(packResult.files.map((file) => file.path));
     for (const required of [
       "bin/dsh-blackbox.mjs",
@@ -87,10 +89,10 @@ test("the published tarball installs, exports, resolves types/schema, and runs i
     await access(join(installedRoot, "src", "index.d.mts"));
     const version = runNode([join(installedRoot, "bin", "dsh-blackbox.mjs"), "--version"], consumer);
     assert.equal(version.status, 0, version.stderr);
-    assert.equal(version.stdout.trim(), "0.1.1");
+    assert.equal(version.stdout.trim(), "0.1.2");
     const npmExecVersion = runNpm(["exec", "--", "dsh-blackbox", "--version"], consumer);
     assert.equal(npmExecVersion.status, 0, npmExecVersion.stderr);
-    assert.equal(npmExecVersion.stdout.trim(), "0.1.1");
+    assert.equal(npmExecVersion.stdout.trim(), "0.1.2");
     const installedManifest = JSON.parse(await readFile(join(installedRoot, "package.json"), "utf8"));
     assert.equal(installedManifest.publishConfig.provenance, true);
   } finally {

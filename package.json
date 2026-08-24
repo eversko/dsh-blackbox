@@ -1,6 +1,6 @@
 {
   "name": "@eversko/dsh-blackbox",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Privacy-safe flight recorder, anomaly detector, and shareable incident pack for DeepSeek Harness sessions.",
   "type": "module",
   "types": "./src/index.d.mts",

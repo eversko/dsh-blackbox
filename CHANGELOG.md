@@ -1,8 +1,13 @@
 # Changelog
 
+## 0.1.2 — 2026-08-24
+
+- Accept both npm 10 array output and npm 12 keyed-object output when inspecting packed tarballs.
+- Publish the first npm registry release without rewriting the public `v0.1.0` or `v0.1.1` source tags.
+
 ## 0.1.1 — 2026-08-24
 
-- Publish the first npm release without rewriting the public `v0.1.0` source tag.
+- Prepare the first npm release without rewriting the public `v0.1.0` source tag.
 - Install the pinned npm release client in an isolated runner prefix so it cannot replace itself mid-job.
 
 ## 0.1.0 — 2026-08-23

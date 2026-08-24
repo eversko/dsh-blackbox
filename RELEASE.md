@@ -6,8 +6,8 @@ Releases are manual, tag-only, and protected by the `npm-release` GitHub environ
 
 1. Confirm the `@eversko` npm organization and package publishing access.
 2. Create the `npm-release` GitHub environment and require a reviewer.
-3. Create a short-lived granular `NPM_TOKEN` limited to `@eversko/dsh-blackbox` for the first publication only.
-4. Tag the exact commit as `v0.1.0` and run **Publish DSH Black Box** with `bootstrap` enabled.
+3. Create a short-lived granular `NPM_TOKEN` limited to the `@eversko` scope for the first publication only.
+4. Tag the exact release commit as `v<version>` and run **Publish DSH Black Box** with `bootstrap` enabled.
 5. Configure npm trusted publishing for organization `eversko`, repository `dsh-blackbox`, workflow `publish.yml`, and environment `npm-release`.
 6. Delete the bootstrap token and remove the `NPM_TOKEN` environment secret.
 

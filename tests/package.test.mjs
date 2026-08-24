@@ -87,10 +87,10 @@ test("the published tarball installs, exports, resolves types/schema, and runs i
     await access(join(installedRoot, "src", "index.d.mts"));
     const version = runNode([join(installedRoot, "bin", "dsh-blackbox.mjs"), "--version"], consumer);
     assert.equal(version.status, 0, version.stderr);
-    assert.equal(version.stdout.trim(), "0.1.0");
+    assert.equal(version.stdout.trim(), "0.1.1");
     const npmExecVersion = runNpm(["exec", "--", "dsh-blackbox", "--version"], consumer);
     assert.equal(npmExecVersion.status, 0, npmExecVersion.stderr);
-    assert.equal(npmExecVersion.stdout.trim(), "0.1.0");
+    assert.equal(npmExecVersion.stdout.trim(), "0.1.1");
     const installedManifest = JSON.parse(await readFile(join(installedRoot, "package.json"), "utf8"));
     assert.equal(installedManifest.publishConfig.provenance, true);
   } finally {
